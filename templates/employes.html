@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="/ajouter" class="btn btn-primary mb-3">Ajouter un employé</a>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th><th>Nom</th><th>Prénom</th><th>Poste</th><th>Salaire</th><th>Actions</th>
+    </tr>
+
+    {% for emp in employes %}
+    <tr>
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.nom }}</td>
+        <td>{{ emp.prenom }}</td>
+        <td>{{ emp.poste }}</td>
+        <td>{{ emp.salaire }}</td>
+        <td>
+            <a href="/modifier/{{ emp.id }}" class="btn btn-warning btn-sm">Modifier</a>
+            <a href="/supprimer/{{ emp.id }}" class="btn btn-danger btn-sm">Supprimer</a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

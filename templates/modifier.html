@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Modifier employé</h2>
+
+<form method="POST">
+    <input class="form-control mb-2" name="nom" value="{{ emp.nom }}">
+    <input class="form-control mb-2" name="prenom" value="{{ emp.prenom }}">
+    <input class="form-control mb-2" name="poste" value="{{ emp.poste }}">
+    <input class="form-control mb-2" name="salaire" value="{{ emp.salaire }}">
+
+    <button class="btn btn-warning">Modifier</button>
+</form>
+
+{% endblock %}
