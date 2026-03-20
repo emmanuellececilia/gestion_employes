@@ -31,7 +31,6 @@ def ajouter():
 def supprimer(id):
     supprimer_employe(id)
     return redirect("/employes")
-
 # MODIFIER
 @app.route("/modifier/<int:id>", methods=["GET", "POST"])
 def modifier(id):
