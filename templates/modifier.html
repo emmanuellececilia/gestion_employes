@@ -2,15 +2,32 @@
 
 {% block content %}
 
-<h2>Modifier employé</h2>
+<h2>Modifier un employé</h2>
 
 <form method="POST">
-    <input class="form-control mb-2" name="nom" value="{{ emp.nom }}">
-    <input class="form-control mb-2" name="prenom" value="{{ emp.prenom }}">
-    <input class="form-control mb-2" name="poste" value="{{ emp.poste }}">
-    <input class="form-control mb-2" name="salaire" value="{{ emp.salaire }}">
 
-    <button class="btn btn-warning">Modifier</button>
+    <div class="mb-3">
+        <label>Nom</label>
+        <input type="text" name="nom" class="form-control" value="{{ emp.nom }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Prénom</label>
+        <input type="text" name="prenom" class="form-control" value="{{ emp.prenom }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Poste</label>
+        <input type="text" name="poste" class="form-control" value="{{ emp.poste }}">
+    </div>
+
+    <div class="mb-3">
+        <label>Salaire</label>
+        <input type="number" name="salaire" class="form-control" value="{{ emp.salaire }}">
+    </div>
+
+    <button class="btn btn-warning">✏️ Modifier</button>
+
 </form>
 
 {% endblock %}

@@ -6,7 +6,7 @@ from employe import Employe
 
 
 # Fonction qui ajoute un employé dans la base
-def ajouter_employe(emp: Employe):
+def add_employe(emp: Employe):
 
     # Ouverture de la connexion à la base
     conn = get_connection()
@@ -40,7 +40,7 @@ def ajouter_employe(emp: Employe):
 
 
 # Fonction pour récupérer tous les employés
-def lister_employes():
+def get_all_employes():
 
     # Connexion à la base
     conn = get_connection()
@@ -64,7 +64,7 @@ def lister_employes():
     return rows
 
 #Modification de la fonction liste_employe afin d'utiliser le fonction Afficher de la classe Employe dans le main
-def lister_employes():
+def liste_employes():
 
     # Connexion à la base
     conn = get_connection()
@@ -106,7 +106,7 @@ def lister_employes():
 
 
 #Fonction qui modifie un employe
-def modifier_employe(emp: Employe):
+def update_employe(emp: Employe):
 
     #connexion à la base de données
     conn=get_connection()
@@ -135,7 +135,7 @@ def modifier_employe(emp: Employe):
     print("l'employé modifié avec succès")
 
     # Fonction qui supprime un employe
-def supprimer_employe(id):
+def delete_employe(id):
     # connexion à la base de données
     conn = get_connection()
 
@@ -144,10 +144,10 @@ def supprimer_employe(id):
 
     # Requete SQL
     cur.execute(
-                 "delete from employes where id=%s"
+                 "delete from employes where id=%s",
 
         # Les valeurs envoyées à la requête
-                ,(id,))
+                (id,))
 
     # Validation de la transaction
     conn.commit()
@@ -160,3 +160,64 @@ def supprimer_employe(id):
 
     # Message utilisateur
     print("Employé supprimé avec succès")
+
+def seach_employe_by_world(mot: str):
+    # Ouverture de la connexion
+    conn = get_connection()
+
+    # Création du cursor
+    cur = conn.cursor()
+
+    # Execution de la requête
+    cur.execute(
+        # La requete
+        """SELECT * FROM employes as emp
+            WHERE emp.nom like %s
+            or emp.prenom like %s
+        """,
+
+        # Valeurs renvoyées à la requête
+        ('%' + mot + '%', '%' + mot + '%')
+    )
+
+    # Récuperation des valeurs retournées
+    rows = cur.fetchall()
+
+    # fermeture du cursor
+    cur.close()
+
+    # fermeture de la connexion
+    conn.close()
+
+    # listre retourné
+    return rows
+
+def get_employe_by_id(id):
+    # Ouverture de la connexion
+    conn = get_connection()
+
+    # Création du cursor
+    cur = conn.cursor()
+
+    # Execution de la requête
+    cur.execute(
+        # La requete
+        """SELECT * FROM employes as emp
+            WHERE emp.id  = %s
+        """,
+
+        # Valeurs renvoyées à la requête
+        (id,)
+    )
+
+    # Récuperation des valeurs retournées
+    rows = cur.fetchone()
+
+    # fermeture du cursor
+    cur.close()
+
+    # fermeture de la connexion
+    conn.close()
+
+    # listre retourné
+    return rows

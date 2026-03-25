@@ -1,53 +1,36 @@
-from flask import Flask, render_template, request, redirect
-from gestion_employe import *
-from employe import Employe
+from flask import Flask, request, render_template, redirect, url_for
+from flask_login import login_user, login_required, logout_user,LoginManager
+from auth_controller import auth_bp
+from employe_controller import employe_bp
+from user import User  # 🔥 on va créer ce fichier
+import os
 
 app = Flask(__name__)
 
-# LISTE
-@app.route("/")
-@app.route("/employes")
-def afficher():
-    employes = lister_employes()
-    return render_template("employes.html", employes=employes)
+# 🔐 obligatoire pour session
+app.secret_key = "supersecretkey"
 
-# AJOUT
-@app.route("/ajouter", methods=["GET", "POST"])
-def ajouter():
-    if request.method == "POST":
-        emp = Employe(
-            nom=request.form["nom"],
-            prenom=request.form["prenom"],
-            poste=request.form["poste"],
-            salaire=float(request.form["salaire"])
-        )
-        ajouter_employe(emp)
-        return redirect("/employes")
+# 🔥 Enregistrer le controller
+app.register_blueprint(employe_bp)
+app.register_blueprint(auth_bp)
 
-    return render_template("ajouter.html")
+if __name__ == "__main__":
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000))
+    )
 
-# SUPPRIMER
-@app.route("/supprimer/<int:id>")
-def supprimer(id):
-    supprimer_employe(id)
-    return redirect("/employes")
-# MODIFIER
-@app.route("/modifier/<int:id>", methods=["GET", "POST"])
-def modifier(id):
+# 🔐 Configuration login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "employe.login"  # IMPORTANT avec blueprint
 
-    # récupérer employé
-    employes = lister_employes()
-    emp = next((e for e in employes if e.id == id), None)
+# 🔥 Charger utilisateur
+@login_manager.user_loader
+def load_user(user_id):
+    return users.get(user_id)
 
-    if request.method == "POST":
-        emp.nom = request.form["nom"]
-        emp.prenom = request.form["prenom"]
-        emp.poste = request.form["poste"]
-        emp.salaire = float(request.form["salaire"])
-
-        modifier_employe(emp)
-        return redirect("/employes")
-
-    return render_template("modifier.html", emp=emp)
-
-app.run(debug=True)
+# 🔥 utilisateur temporaire
+users = {
+    "1": User("1", "admin", "1234")
+}

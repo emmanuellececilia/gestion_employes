@@ -6,9 +6,17 @@
 </head>
 <body>
 
-<div class="container mt-4">
-    <h1 class="mb-4">Gestion des employés</h1>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <span class="navbar-brand">Gestion Employés</span>
 
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">
+            Déconnexion
+        </a>
+    </div>
+</nav>
+
+<div class="container mt-4">
     {% block content %}{% endblock %}
 </div>
 

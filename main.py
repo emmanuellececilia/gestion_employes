@@ -2,7 +2,7 @@
 from database import creer_table
 
 # On importe les fonctions de gestion
-from gestion_employe import ajouter_employe, lister_employes,modifier_employe,supprimer_employe
+from employe_repository import add_employe, get_all_employes,update_employe,delete_employe
 
 # On importe la classe Employe
 from employe import Employe
@@ -51,14 +51,14 @@ def menu():
             emp = Employe(nom, prenom, poste, salaire)
 
             # Appel de la fonction d'ajout
-            ajouter_employe(emp)
+            add_employe(emp)
 
 
         # Si l'utilisateur veut afficher les employés
         elif choix == "2":
 
             # Appel de la fonction de récupération
-            employes = lister_employes()
+            employes = get_all_employes()
 
             # Parcours de la liste
             for emp in employes:
@@ -69,7 +69,7 @@ def menu():
         elif choix == "2":
 
             # Appel de la fonction de récupération
-            employes = lister_employes()
+            employes = get_all_employes()
 
             # Parcours de la liste
             for emp in employes:
@@ -78,7 +78,6 @@ def menu():
         elif choix == "3":
 
             id_emp = int(input("ID de l'employé à modifier : "))
-
             nom = input("Nouveau nom : ")
             prenom = input("Nouveau prénom : ")
             poste = input("Nouveau poste : ")
@@ -86,13 +85,13 @@ def menu():
 
             emp = Employe(nom, prenom, poste, salaire, id_emp)
 
-            modifier_employe(emp)
+            update_employe(emp)
 
         elif choix == "4":
 
             id_emp = int(input("ID de l'employé à supprimer : "))
 
-            supprimer_employe(id_emp)
+            delete_employe(id_emp)
 
         # Si l'utilisateur veut quitter
         elif choix == "0":
