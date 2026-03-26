@@ -5,13 +5,20 @@ def get_user_by_username(username):
     cur = conn.cursor()
 
     cur.execute(
-        "SELECT * FROM users WHERE username = %s",
+        "SELECT id, username, password FROM users WHERE username = %s",
         (username,)
     )
 
-    user = cur.fetchone()
+    row = cur.fetchone()
 
     cur.close()
     conn.close()
 
-    return user
+    if row:
+        return {
+            "id": row[0],
+            "username": row[1],
+            "password": row[2]
+        }
+
+    return None

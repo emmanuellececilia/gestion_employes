@@ -1,18 +1,23 @@
+<!-- templates/base.html -->
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
     <title>Gestion Employés</title>
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
-<body>
+<body class="bg-light">
 
 <nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-        <span class="navbar-brand">Gestion Employés</span>
+    <div class="container">
+        <span class="navbar-brand">🏥 Gestion Employés</span>
 
-        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">
-            Déconnexion
-        </a>
+        {% if session.get("user") %}
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        {% endif %}
     </div>
 </nav>
 
